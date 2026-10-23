@@ -1,0 +1,52 @@
+name: CI
+
+# Pushes to any branch (including merges into main) and pull requests targeting main.
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# A newer push to the same branch or PR cancels the run it supersedes; runs on main always finish.
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+jobs:
+  lint-and-test:
+    name: Lint, typecheck & test
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      # Uses the pnpm version from package.json's "packageManager" field.
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # Biome's CI mode checks formatting, lint, and import order without writing, and annotates the PR diff.
+      - name: Lint and format check
+        run: pnpm exec biome ci --reporter=github .
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+      - name: Unit tests
+        run: pnpm test

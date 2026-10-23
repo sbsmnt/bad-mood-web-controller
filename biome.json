@@ -1,0 +1,120 @@
+{
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "files": {
+    "includes": ["**", "!**/dist", "!**/node_modules", "!**/.pnpm-store", "!**/tmp"]
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 120,
+    "lineEnding": "lf"
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "single",
+      "jsxQuoteStyle": "double",
+      "semicolons": "asNeeded",
+      "trailingCommas": "all",
+      "arrowParentheses": "always"
+    }
+  },
+  "css": {
+    "formatter": {
+      "quoteStyle": "single"
+    }
+  },
+  "json": {
+    "formatter": {
+      "trailingCommas": "none"
+    }
+  },
+  "assist": {
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
+    }
+  },
+  "linter": {
+    "enabled": true,
+    "domains": {
+      "react": "recommended"
+    },
+    "rules": {
+      "preset": "recommended",
+      "correctness": {
+        "useExhaustiveDependencies": "error",
+        "useHookAtTopLevel": "error",
+        "noUnusedImports": "error",
+        "noUnusedVariables": "error",
+        "noUnusedFunctionParameters": "error",
+        "noChildrenProp": "error",
+        "useJsxKeyInIterable": "error"
+      },
+      "suspicious": {
+        "noArrayIndexKey": "error",
+        "noConsole": {
+          "level": "warn",
+          "options": {
+            "allow": ["warn", "error"]
+          }
+        },
+        "noExplicitAny": "error",
+        "noDoubleEquals": "error"
+      },
+      "style": {
+        "useImportType": "error",
+        "useExportType": "error",
+        "useConst": "error",
+        "useTemplate": "error",
+        "useSelfClosingElements": "error",
+        "useFragmentSyntax": "error",
+        "noNonNullAssertion": "warn",
+        "noParameterAssign": "error",
+        "noUselessElse": "error",
+        "noNamespace": "error",
+        "useConsistentArrayType": {
+          "level": "error",
+          "options": {
+            "syntax": "shorthand"
+          }
+        }
+      },
+      "complexity": {
+        "noUselessFragments": "error",
+        "noForEach": "off",
+        "useOptionalChain": "error"
+      },
+      "a11y": {
+        "preset": "recommended",
+        "useButtonType": "error",
+        "useAltText": "error",
+        "useKeyWithClickEvents": "error",
+        "noStaticElementInteractions": "error"
+      }
+    }
+  },
+  "overrides": [
+    {
+      "includes": ["public/**/*.svg"],
+      "linter": {
+        "rules": {
+          "a11y": {
+            "noSvgWithoutTitle": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["**/*.css"],
+      "linter": {
+        "rules": {
+          "style": {
+            "noDescendingSpecificity": "off"
+          }
+        }
+      }
+    }
+  ]
+}
