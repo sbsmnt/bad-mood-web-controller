@@ -2,9 +2,9 @@
 
 A React + TypeScript Web MIDI editor for the Chase Bliss BAD MOOD pedal.
 
-## Run locally on macOS
+## Run locally
 
-The project supports both Apple Silicon and Intel Macs. It uses Node.js 24 (LTS) and pnpm 11.
+The project runs on any OS that supports Node.js 24 (LTS) and pnpm 11.
 
 If you use `nvm`, the included `.nvmrc` selects Node.js 24; CI reads the same file:
 
@@ -20,15 +20,7 @@ If Node.js is already installed without `nvm`, verify it with `node --version`, 
 
 Open the local URL in Chrome or Edge, choose **Enable MIDI**, approve the MIDI permission prompt, select the MIDI output connected to the pedal, and leave the channel at the BAD MOOD default of **2** unless the pedal has been reconfigured.
 
-Web MIDI requires a secure context. `localhost` is allowed, while a deployed build must use HTTPS. Chrome or Edge is recommended on macOS because Safari does not currently expose the Web MIDI API used by the editor.
-
-## Other platforms
-
-```sh
-corepack enable
-pnpm install --frozen-lockfile
-pnpm dev
-```
+Web MIDI requires a secure context. `localhost` is allowed, while a deployed build must use HTTPS. Chrome or Edge is recommended; Safari does not currently expose the Web MIDI API used by the editor.
 
 ## Code quality
 
